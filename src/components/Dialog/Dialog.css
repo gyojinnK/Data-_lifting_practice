@@ -1,0 +1,51 @@
+.dialog-wrap {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog {
+    height: 200px;
+    overflow: hidden;
+    position: absolute;
+    top: calc(50% - 180px);
+    left: calc(50% - 25%);
+}
+
+.dialog-title {
+    background-color: rgb(100, 47, 149);
+    height: 60px;
+}
+
+.dialog-title > p {
+    font-size: 2rem;
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    padding: 6px 15px;
+}
+
+.dialog-text > p {
+    margin: 25px 0 0 15px;
+}
+
+.dialog-btn {
+    border: none;
+    background-color: rgb(131, 74, 184);
+    color: white;
+    font-size: 1rem;
+    padding: 4px 16px;
+    margin: 0.5rem 0;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 5px;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+.dialog-btn:hover,
+.dialog-btn:active {
+    background-color: rgb(100, 47, 149);
+}
