@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import Card from "../UI/Card";
 import Button from "../UI/Button";
@@ -7,16 +7,17 @@ import Wrapper from "../Helpers/Wrapper";
 import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
-    const [enteredUsername, setEnteredUsername] = useState("");
-    const [enteredUserage, setEnteredUserage] = useState("");
+    const nameInputRef = useRef(); // current 프롭을 갖는 객체 반환
+    const ageInputRef = useRef();
+    // 값을 업데이트할 목적이 아닌 단순히 사용자에게 값만을 빠르게 받아오고 싶을 때 state대신 ref를 사용하면 이점이 있음.
+
     const [error, setError] = useState();
 
     const addUserHandler = (event) => {
         event.preventDefault();
-        if (
-            enteredUsername.trim().length === 0 ||
-            enteredUserage.trim().length === 0
-        ) {
+        const enteredName = nameInputRef.current.value;
+        const enteredAge = ageInputRef.current.value;
+        if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
             setError({
                 title: "Invalid input",
                 message:
@@ -24,7 +25,7 @@ const AddUser = (props) => {
             });
             return;
         }
-        if (+enteredUserage < 1) {
+        if (+enteredAge < 1) {
             // +기호를 사용하여 문자열을 숫자형으로 변경
             setError({
                 title: "Invalid age",
@@ -32,17 +33,9 @@ const AddUser = (props) => {
             });
             return;
         }
-        props.onAddUser(enteredUsername, enteredUserage);
-        setEnteredUsername("");
-        setEnteredUserage("");
-    };
-
-    const usernameChangeHandler = (e) => {
-        setEnteredUsername(e.target.value);
-    };
-
-    const userageChangeHandler = (e) => {
-        setEnteredUserage(e.target.value);
+        props.onAddUser(enteredName, enteredAge);
+        nameInputRef.current.value = "";
+        ageInputRef.current.value = "";
     };
 
     const errorHandler = () => {
@@ -61,19 +54,11 @@ const AddUser = (props) => {
             <Card cssClass={classes.input}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="username">Username</label>
-                    <input
-                        id="username"
-                        type="text"
-                        value={enteredUsername}
-                        onChange={usernameChangeHandler}
-                    />
+                    <input id="username" type="text" ref={nameInputRef} />
+                    {/* ref로 연결된 태그는 제어되지 않는 컴포넌트가 된다. */}
+                    {/* state로 연결되었다면 제어되는 컴포넌트가 된다. */}
                     <label htmlFor="age">Age (Years)</label>
-                    <input
-                        id="age"
-                        type="number"
-                        value={enteredUserage}
-                        onChange={userageChangeHandler}
-                    />
+                    <input id="age" type="number" ref={ageInputRef} />
                     <Button type="submit">Add User</Button>
                 </form>
             </Card>
