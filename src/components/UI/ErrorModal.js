@@ -35,6 +35,7 @@ const ErrorModal = (props) => {
                 1. 랜더링할 요소(컴포넌트)
                 2. 랜더링할 위치
                     -> 위치는 public 폴더 속 index.html에서 div에 id명으로 생성
+                +) 컴포넌트를 독립적으로 생성했다면 다른 요소에서 사용할 수 있음 (재사용성)
             */}
             {ReactDOM.createPortal(
                 <Backdrop onErrorHandler={props.onErrorHandler} />,
